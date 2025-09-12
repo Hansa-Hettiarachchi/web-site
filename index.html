@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Before/After Image Comparison</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>Ours vs 3DGS Comparison</h1>
+        
+        <div class="controls">
+            <!-- Navigation buttons for comparison modes -->
+            <div class="mode-selector">
+                <button id="mode3DGS" class="mode-btn active">Ours vs 3DGS</button>
+                <button id="modeGT" class="mode-btn">Ours vs GT</button>
+            </div>
+            
+            <label for="imageSelect">Select Image:</label>
+            <select id="imageSelect">
+                <option value="00000">Image 00000</option>
+                <option value="00001">Image 00001</option>
+                <option value="00002">Image 00002</option>
+                <option value="00003">Image 00003</option>
+                <option value="00004">Image 00004</option>
+                <option value="00005">Image 00005</option>
+                <option value="00006">Image 00006</option>
+                <option value="00007">Image 00007</option>
+                <option value="00008">Image 00008</option>
+                <option value="00009">Image 00009</option>
+                <option value="00010">Image 00010</option>
+                <option value="00011">Image 00011</option>
+                <option value="00012">Image 00012</option>
+                <option value="00013">Image 00013</option>
+                <option value="00014">Image 00014</option>
+                <option value="00015">Image 00015</option>
+                <option value="00016">Image 00016</option>
+                <option value="00017">Image 00017</option>
+                <option value="00018">Image 00018</option>
+                <option value="00019">Image 00019</option>
+                <option value="00020">Image 00020</option>
+                <option value="00021">Image 00021</option>
+                <option value="00022">Image 00022</option>
+                <option value="00023">Image 00023</option>
+                
+                
+            </select>
+        </div>
+
+                        <div class="container">
+                <div class="image-container">
+                    <img class="slider-image" id="beforeImage" src="Ours/00000.png" alt="Graph GS" />
+                    <img class="slider-image" id="afterImage" src="3DGS/00000.png" alt="3DGS" />
+                    <div class="overlay-label overlay-label-left">3DGS</div>
+                    <div class="overlay-label overlay-label-right">Ours</div>
+                </div>
+                <input type="range" min="1" max="99" value="50" class="slider" id="slider">
+                <div class="slider-line"></div>
+                <div class="slider-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 256 256">
+                        <rect width="256" height="256" fill="none"></rect>
+                        <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                        <line x1="96" y1="128" x2="16" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                        <polyline points="48 160 16 128 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+                        <line x1="160" y1="128" x2="240" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                        <polyline points="208 96 240 128 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+                    </svg>
+                </div>
+            </div>        <div class="labels">
+            <!-- <span class="label-left">Ours</span>
+            <span class="label-right">3DGS</span> -->
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
