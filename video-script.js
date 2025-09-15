@@ -29,7 +29,7 @@ playPauseBtn.addEventListener('click', () => {
             afterVideo.play()
         ]).then(() => {
             console.log('Both videos started playing');
-            videoStatus.textContent = 'Videos playing simultaneously';
+            videoStatus.textContent = 'Videos playing in sync (will loop continuously)';
         }).catch(e => {
             console.error('Failed to start videos:', e);
             videoStatus.textContent = 'Error starting videos';
@@ -40,7 +40,7 @@ playPauseBtn.addEventListener('click', () => {
         console.log('Pausing both videos...');
         beforeVideo.pause();
         afterVideo.pause();
-        videoStatus.textContent = 'Videos paused';
+        videoStatus.textContent = 'Videos paused (click to resume looping)';
     }
 });
 
@@ -57,7 +57,7 @@ restartBtn.addEventListener('click', () => {
         afterVideo.play()
     ]).then(() => {
         console.log('Both videos restarted');
-        videoStatus.textContent = 'Videos restarted and playing';
+        videoStatus.textContent = 'Videos restarted and looping continuously';
     }).catch(e => {
         console.error('Failed to restart videos:', e);
         videoStatus.textContent = 'Error restarting videos';
@@ -93,14 +93,11 @@ function updateVideos() {
 }
 
 function syncVideos() {
-    // Only add basic time sync - no play/pause sync to avoid conflicts
+    // Remove any existing sync event listeners to avoid performance issues
     beforeVideo.removeEventListener('timeupdate', keepInSync);
     afterVideo.removeEventListener('timeupdate', keepInSync);
     
-    // Add gentle time synchronization
-    beforeVideo.addEventListener('timeupdate', keepInSync);
-    afterVideo.addEventListener('timeupdate', keepInSync);
-    
+    // Only use the interval-based sync to avoid constant interruptions
     // Start both videos from the beginning
     beforeVideo.currentTime = 0;
     afterVideo.currentTime = 0;
@@ -108,15 +105,16 @@ function syncVideos() {
 
 let lastSyncTime = 0;
 function keepInSync(event) {
-    // Only sync every 500ms to avoid constant corrections
+    // Only sync every 2 seconds to avoid interfering with playback
     const now = Date.now();
-    if (now - lastSyncTime < 500) return;
+    if (now - lastSyncTime < 2000) return;
     lastSyncTime = now;
     
-    // Gentle sync - only if videos drift apart by more than 0.3 seconds
+    // Only sync if videos drift apart by more than 0.5 seconds (larger threshold)
     const timeDiff = Math.abs(beforeVideo.currentTime - afterVideo.currentTime);
-    if (timeDiff > 0.3) {
+    if (timeDiff > 0.5) {
         console.log('Syncing videos - time difference:', timeDiff);
+        // Sync to the faster video to avoid stuttering
         if (event.target === beforeVideo) {
             afterVideo.currentTime = beforeVideo.currentTime;
         } else {
@@ -203,25 +201,54 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('After video error:', e);
     });
     
+    // Add loop handling to ensure videos restart together
+    beforeVideo.addEventListener('ended', () => {
+        console.log('Before video ended, restarting both...');
+        beforeVideo.currentTime = 0;
+        afterVideo.currentTime = 0;
+        
+        // Restart both videos simultaneously
+        Promise.all([
+            beforeVideo.play(),
+            afterVideo.play()
+        ]).catch(e => {
+            console.error('Failed to restart videos on loop:', e);
+        });
+    });
+    
+    afterVideo.addEventListener('ended', () => {
+        console.log('After video ended, restarting both...');
+        beforeVideo.currentTime = 0;
+        afterVideo.currentTime = 0;
+        
+        // Restart both videos simultaneously
+        Promise.all([
+            beforeVideo.play(),
+            afterVideo.play()
+        ]).catch(e => {
+            console.error('Failed to restart videos on loop:', e);
+        });
+    });
+    
     // Force load the videos
     beforeVideo.load();
     afterVideo.load();
     
     syncVideos();
-    
-    // Continuous sync check every second during playback
+      // Continuous sync check - reduced frequency and larger threshold
     setInterval(() => {
         if (!beforeVideo.paused && !afterVideo.paused) {
             const timeDiff = Math.abs(beforeVideo.currentTime - afterVideo.currentTime);
-            if (timeDiff > 0.1) {
+            // Only sync if difference is significant (more than 0.5 seconds)
+            if (timeDiff > 0.5) {
                 console.log('Auto-syncing videos, time difference:', timeDiff);
-                // Sync to the video that's behind
+                // Sync to the video that's ahead to maintain smooth playback
                 const targetTime = Math.max(beforeVideo.currentTime, afterVideo.currentTime);
                 beforeVideo.currentTime = targetTime;
                 afterVideo.currentTime = targetTime;
             }
         }
-    }, 1000);
+    }, 3000); // Check every 3 seconds instead of 1 second
     
     videoStatus.textContent = 'Videos loading... Click Play/Pause when ready';
 });
