@@ -30,22 +30,24 @@ function switchMode(mode) {
   mode3DGSBtn.classList.toggle('active', mode === '3DGS');
   modeGTBtn.classList.toggle('active', mode === 'GT');
   
-  // Update page title and labels
+  // Update page title and labels for image modes
   if (mode === '3DGS') {
     pageTitle.textContent = 'Ours vs 3DGS Comparison';
     labelLeft.textContent = '3DGS';
     labelRight.textContent = 'Ours';
-    labelsLeft.textContent = 'Ours';
-    labelsRight.textContent = '3DGS';
+    if (labelsLeft && labelsRight) {
+      labelsLeft.textContent = 'Ours';
+      labelsRight.textContent = '3DGS';
+    }
   } else {
     pageTitle.textContent = 'Ours vs GT Comparison';
     labelLeft.textContent = 'GT';
     labelRight.textContent = 'Ours';
-    labelsLeft.textContent = 'Ours';
-    labelsRight.textContent = 'GT';
+    if (labelsLeft && labelsRight) {
+      labelsLeft.textContent = 'Ours';
+      labelsRight.textContent = 'GT';
+    }
   }
-  
-  // Update images based on current selection
   updateImages();
 }
 
@@ -121,7 +123,7 @@ slider.addEventListener('input', (e) => {
   }
 });
 
-// Handle image selection
+// Handle selection change
 imageSelect.addEventListener('change', (e) => {
   updateImages();
 });

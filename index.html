@@ -15,10 +15,12 @@
             <div class="mode-selector">
                 <button id="mode3DGS" class="mode-btn active">Ours vs 3DGS</button>
                 <button id="modeGT" class="mode-btn">Ours vs GT</button>
+                <button id="modeVideo" class="mode-btn" onclick="window.location.href='video.html'">Video Comparison</button>
             </div>
             
             <label for="imageSelect">Select Image:</label>
             <select id="imageSelect">
+                <option value="G1">Image G1</option>
                 <option value="00000">Image 00000</option>
                 <option value="00001">Image 00001</option>
                 <option value="00002">Image 00002</option>
@@ -43,6 +45,24 @@
                 <option value="00021">Image 00021</option>
                 <option value="00022">Image 00022</option>
                 <option value="00023">Image 00023</option>
+                <option value="00024">Image 00024</option>
+                <option value="00025">Image 00025</option>
+                <option value="00026">Image 00026</option>
+                <option value="00027">Image 00027</option>
+                <option value="00028">Image 00028</option>
+                <option value="00029">Image 00029</option>
+                <option value="00030">Image 00030</option>
+                <option value="00031">Image 00031</option>
+                <option value="00032">Image 00032</option>
+                <option value="00033">Image 00033</option>
+                <option value="00034">Image 00034</option>
+                <option value="00035">Image 00035</option>
+                <option value="00036">Image 00036</option>
+                <option value="00037">Image 00037</option>
+                
+
+
+
                 
                 
             </select>
@@ -50,8 +70,10 @@
 
                         <div class="container">
                 <div class="image-container">
-                    <img class="slider-image" id="beforeImage" src="Ours/00000.png" alt="Graph GS" />
-                    <img class="slider-image" id="afterImage" src="3DGS/00000.png" alt="3DGS" />
+                    <!-- Image elements for image comparison -->
+                    <img class="slider-image" id="beforeImage" src="Ours/G1.png" alt="Ours" />
+                    <img class="slider-image" id="afterImage" src="3DGS/G1.png" alt="3DGS" />
+                    
                     <div class="overlay-label overlay-label-left">3DGS</div>
                     <div class="overlay-label overlay-label-right">Ours</div>
                 </div>
