@@ -181,15 +181,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // Log video sources for debugging
     console.log('Before video src:', beforeVideo.src);
     console.log('After video src:', afterVideo.src);
+      // Add event listeners to check video loading status
+    let beforeVideoLoaded = false;
+    let afterVideoLoaded = false;
     
-    // Add event listeners to check video loading status
+    function checkAutoplay() {
+        if (beforeVideoLoaded && afterVideoLoaded) {
+            // Both videos loaded, start autoplay
+            setTimeout(() => {
+                console.log('Both videos loaded, starting autoplay...');
+                
+                // Start both videos simultaneously
+                Promise.all([
+                    beforeVideo.play(),
+                    afterVideo.play()
+                ]).then(() => {
+                    console.log('Autoplay started successfully');
+                    videoStatus.textContent = 'Videos playing automatically (will loop continuously)';
+                }).catch(e => {
+                    console.error('Autoplay failed (browser may block autoplay):', e);
+                    videoStatus.textContent = 'Autoplay blocked by browser - click Play/Pause to start';
+                });
+            }, 500); // Small delay to ensure videos are ready
+        }
+    }
+    
     beforeVideo.addEventListener('loadeddata', () => {
         console.log('Before video loaded successfully');
-        videoStatus.textContent = 'Videos loaded - ready to play';
+        beforeVideoLoaded = true;
+        checkAutoplay();
     });
     
     afterVideo.addEventListener('loadeddata', () => {
         console.log('After video loaded successfully');
+        afterVideoLoaded = true;
+        checkAutoplay();
     });
     
     beforeVideo.addEventListener('error', (e) => {
@@ -250,5 +276,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 3000); // Check every 3 seconds instead of 1 second
     
-    videoStatus.textContent = 'Videos loading... Click Play/Pause when ready';
+    videoStatus.textContent = 'Videos loading... Will start automatically when ready';
 });
