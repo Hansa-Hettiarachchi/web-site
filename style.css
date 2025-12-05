@@ -96,8 +96,8 @@ h1 {
 }
 
 .image-container {
-  max-width: 1600px;
-  height: 1000px;
+  max-width: 1200px;
+  height: 900px;
   aspect-ratio: 3/2;
   position: relative;
   background: #f0f0f0;
