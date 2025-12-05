@@ -5,12 +5,52 @@ const beforeImage = document.getElementById('beforeImage');
 const afterImage = document.getElementById('afterImage');
 const labelLeft = document.querySelector('.overlay-label-left');
 const labelRight = document.querySelector('.overlay-label-right');
+const mode360_3DGSBtn = document.getElementById('mode360_3DGS');
+const mode360_GTBtn = document.getElementById('mode360_GT');
+const pageTitle = document.querySelector('h1');
+
+// Current comparison mode
+let currentMode = '3DGS'; // '3DGS' or 'GT'
+
+// Handle mode switching
+mode360_3DGSBtn.addEventListener('click', () => {
+  switchMode('3DGS');
+});
+
+mode360_GTBtn.addEventListener('click', () => {
+  switchMode('GT');
+});
+
+function switchMode(mode) {
+  currentMode = mode;
+  
+  // Update button states
+  mode360_3DGSBtn.classList.toggle('active', mode === '3DGS');
+  mode360_GTBtn.classList.toggle('active', mode === 'GT');
+  
+  // Update page title and labels
+  if (mode === '3DGS') {
+    pageTitle.textContent = 'Ours 360 vs 3DGS Comparison';
+    labelLeft.textContent = '3DGS';
+    labelRight.textContent = 'Ours 360';
+  } else {
+    pageTitle.textContent = 'Ours 360 vs GT Comparison';
+    labelLeft.textContent = 'GT';
+    labelRight.textContent = 'Ours 360';
+  }
+  updateImages();
+}
 
 function updateImages() {
   const imageIndex = imageSelect.value;
   
-  beforeImage.src = `Ours360/${imageIndex}.png`;
-  afterImage.src = `3DGS/${imageIndex}.png`;
+  if (currentMode === '3DGS') {
+    beforeImage.src = `Ours360/${imageIndex}.png`;
+    afterImage.src = `3DGS/${imageIndex}.png`;
+  } else {
+    beforeImage.src = `Ours360/${imageIndex}.png`;
+    afterImage.src = `gt/${imageIndex}.png`;
+  }
   
   // Handle loading errors with fallback
   beforeImage.onerror = () => {
@@ -18,7 +58,7 @@ function updateImages() {
   };
   
   afterImage.onerror = () => {
-    console.warn(`Could not load 3DGS image: ${imageIndex}.png`);
+    console.warn(`Could not load ${currentMode} image: ${imageIndex}.png`);
   };
 }
 
@@ -63,9 +103,14 @@ slider.addEventListener('input', (e) => {
   labelLeft.style.opacity = '1';
   labelRight.style.opacity = '1';
   
-  // Update labels
-  labelLeft.textContent = '3DGS';
-  labelRight.textContent = 'Our 360';
+  // Update labels based on current mode
+  if (currentMode === '3DGS') {
+    labelLeft.textContent = '3DGS';
+    labelRight.textContent = 'Ours 360';
+  } else {
+    labelLeft.textContent = 'GT';
+    labelRight.textContent = 'Ours 360';
+  }
 });
 
 // Handle selection change
