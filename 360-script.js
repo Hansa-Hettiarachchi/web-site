@@ -1,16 +1,34 @@
-const container = document.querySelector('.container');
-const slider = document.getElementById('slider');
-const imageSelect = document.getElementById('imageSelect');
-const beforeImage = document.getElementById('beforeImage');
-const afterImage = document.getElementById('afterImage');
-const labelLeft = document.querySelector('.overlay-label-left');
-const labelRight = document.querySelector('.overlay-label-right');
-const mode360_3DGSBtn = document.getElementById('mode360_3DGS');
-const mode360_GTBtn = document.getElementById('mode360_GT');
-const pageTitle = document.querySelector('h1');
+// Scene configuration - easy to add more scenes
+const sceneConfig = [
+  {
+    id: 1,
+    name: 'Garden',
+    images: ['G1']
+  },
+  {
+    id: 2,
+    name: 'Bicycle',
+    images: ['B1', 'B2', 'B3', 'B4']
+  },
+  {
+    id: 3,
+    name: 'C-series',
+    images: ['C1', 'C2', 'C3', 'C4', 'C5']
+  },
+  {
+    id: 4,
+    name: 'N-series',
+    images: ['N1', 'N2', 'N3']
+  }
+];
 
 // Current comparison mode
 let currentMode = '3DGS'; // '3DGS' or 'GT'
+
+// Mode buttons
+const mode360_3DGSBtn = document.getElementById('mode360_3DGS');
+const mode360_GTBtn = document.getElementById('mode360_GT');
+const pageTitle = document.querySelector('h1');
 
 // Handle mode switching
 mode360_3DGSBtn.addEventListener('click', () => {
@@ -28,20 +46,56 @@ function switchMode(mode) {
   mode360_3DGSBtn.classList.toggle('active', mode === '3DGS');
   mode360_GTBtn.classList.toggle('active', mode === 'GT');
   
-  // Update page title and labels
+  // Update page title
   if (mode === '3DGS') {
     pageTitle.textContent = 'Ours 360 vs 3DGS Comparison';
-    labelLeft.textContent = '3DGS';
-    labelRight.textContent = 'Ours 360';
   } else {
     pageTitle.textContent = 'Ours 360 vs GT Comparison';
-    labelLeft.textContent = 'GT';
-    labelRight.textContent = 'Ours 360';
   }
-  updateImages();
+  
+  // Update all viewers
+  sceneConfig.forEach(scene => {
+    updateViewerImages(scene.id);
+    updateViewerLabels(scene.id);
+  });
 }
 
-function updateImages() {
+// Initialize all viewers
+sceneConfig.forEach(scene => {
+  initializeViewer(scene.id);
+});
+
+function initializeViewer(viewerId) {
+  const slider = document.getElementById(`slider${viewerId}`);
+  const imageSelect = document.getElementById(`imageSelect${viewerId}`);
+  const container = document.querySelector(`[data-viewer="${viewerId}"]`);
+  const labelLeft = document.getElementById(`labelLeft${viewerId}`);
+  const labelRight = document.getElementById(`labelRight${viewerId}`);
+  
+  // Handle slider input
+  slider.addEventListener('input', (e) => {
+    handleSliderInput(e, viewerId, container, labelLeft, labelRight);
+  });
+  
+  // Handle image selection change
+  imageSelect.addEventListener('change', () => {
+    updateViewerImages(viewerId);
+  });
+  
+  // Initialize images
+  updateViewerImages(viewerId);
+  updateViewerLabels(viewerId);
+}
+
+function updateViewerImages(viewerId) {
+  const imageSelect = document.getElementById(`imageSelect${viewerId}`);
+  const beforeImage = document.getElementById(`beforeImage${viewerId}`);
+  const afterImage = document.getElementById(`afterImage${viewerId}`);
+  const slider = document.getElementById(`slider${viewerId}`);
+  const container = document.querySelector(`[data-viewer="${viewerId}"]`);
+  const labelLeft = document.getElementById(`labelLeft${viewerId}`);
+  const labelRight = document.getElementById(`labelRight${viewerId}`);
+  
   const imageIndex = imageSelect.value;
   
   if (currentMode === '3DGS') {
@@ -51,6 +105,16 @@ function updateImages() {
     beforeImage.src = `Ours360/${imageIndex}.png`;
     afterImage.src = `gt/${imageIndex}.png`;
   }
+  
+  // Reset slider to center (50%)
+  slider.value = 50;
+  container.style.setProperty('--position', '50%');
+  
+  // Reset label clip paths
+  labelLeft.style.clipPath = 'none';
+  labelRight.style.clipPath = 'none';
+  labelLeft.style.opacity = '1';
+  labelRight.style.opacity = '1';
   
   // Handle loading errors with fallback
   beforeImage.onerror = () => {
@@ -62,8 +126,20 @@ function updateImages() {
   };
 }
 
-// Handle slider input using pixel-based calculation for precise clipping
-slider.addEventListener('input', (e) => {
+function updateViewerLabels(viewerId) {
+  const labelLeft = document.getElementById(`labelLeft${viewerId}`);
+  const labelRight = document.getElementById(`labelRight${viewerId}`);
+  
+  if (currentMode === '3DGS') {
+    labelLeft.textContent = '3DGS';
+    labelRight.textContent = 'Ours 360';
+  } else {
+    labelLeft.textContent = 'GT';
+    labelRight.textContent = 'Ours 360';
+  }
+}
+
+function handleSliderInput(e, viewerId, container, labelLeft, labelRight) {
   const value = parseInt(e.target.value);
   container.style.setProperty('--position', `${value}%`);
   
@@ -89,7 +165,7 @@ slider.addEventListener('input', (e) => {
     const clipPercentage = (clipPixels / leftLabelRect.width) * 100;
     labelLeft.style.clipPath = `inset(0 ${100 - clipPercentage}% 0 0)`;
   } else {
-    labelLeft.style.clipPath = 'none'; // Fully visible when slider is not over it
+    labelLeft.style.clipPath = 'none';
   }
   
   // Clip right label when slider line intersects it
@@ -98,23 +174,10 @@ slider.addEventListener('input', (e) => {
     const clipPercentage = (clipPixels / rightLabelRect.width) * 100;
     labelRight.style.clipPath = `inset(0 0 0 ${clipPercentage}%)`;
   } else {
-    labelRight.style.clipPath = 'none'; // Fully visible when slider is not over it
+    labelRight.style.clipPath = 'none';
   }
+  
   labelLeft.style.opacity = '1';
   labelRight.style.opacity = '1';
-  
-  // Update labels based on current mode
-  if (currentMode === '3DGS') {
-    labelLeft.textContent = '3DGS';
-    labelRight.textContent = 'Ours 360';
-  } else {
-    labelLeft.textContent = 'GT';
-    labelRight.textContent = 'Ours 360';
-  }
-});
-
-// Handle selection change
-imageSelect.addEventListener('change', (e) => {
-  updateImages();
-});
+}
 

@@ -116,12 +116,16 @@ h1 {
   user-select: none;
 }
 
+/* Target all before images (beforeImage1, beforeImage2, etc.) */
+img[id^="beforeImage"],
 #beforeImage,
 #beforeVideo {
   z-index: 2;
   clip-path: inset(0 0 0 var(--position));
 }
 
+/* Target all after images (afterImage1, afterImage2, etc.) */
+img[id^="afterImage"],
 #afterImage,
 #afterVideo {
   z-index: 1;
@@ -175,8 +179,8 @@ h1 {
   position: absolute;
   bottom: 20px;
   font-weight: bold;
-  font-size: 28px;
-  padding: 8px 16px;
+  font-size: 20px;
+  padding: 6px 12px;
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.7);
   color: white;
@@ -274,3 +278,78 @@ h1 {
   border: 2px solid #3498db;
   box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
 } */
+
+/* Viewers Grid Layout */
+.viewers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.viewer-wrapper {
+  padding: 10px;
+  margin: 10px;
+  background: rgb(231, 231, 231);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.viewer-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  justify-content: center;
+}
+
+.viewer-header label {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+  text-align: center;
+}
+
+.scene-selector {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  flex: 1;
+  max-width: 100px;
+  text-align: center;
+}
+
+/* Adjust container size for grid layout */
+.viewers-grid .container {
+  max-width: 100%;
+  width: 100%;
+}
+
+.viewers-grid .image-container {
+  max-width: 100%;
+  height: 600px;
+  aspect-ratio: 3/2;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 1200px) {
+  .viewers-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  
+  .viewers-grid .image-container {
+    height: 500px;
+  }
+}
