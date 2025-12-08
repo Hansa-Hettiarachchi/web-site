@@ -110,13 +110,10 @@
                     </div>
                 </div>
                 <div class="viewer-header">
-                    <label for="imageSelect3">Scene 3 - C-series:</label>
+                    <label for="imageSelect3">Scene 3 - Counter:</label>
                     <select id="imageSelect3" class="scene-selector">
                         <option value="C1">C1</option>
-                        <option value="C2">C2</option>
-                        <option value="C3">C3</option>
-                        <option value="C4">C4</option>
-                        <option value="C5">C5</option>
+                        <option value="C4">C2</option>
                     </select>
                 </div>
             </div>
@@ -145,11 +142,81 @@
                     </div>
                 </div>
                 <div class="viewer-header">
-                    <label for="imageSelect4">Scene 4 - N-series:</label>
+                    <label for="imageSelect4">Scene 4 - Flowers:</label>
                     <select id="imageSelect4" class="scene-selector">
-                        <option value="N1">N1</option>
-                        <option value="N2">N2</option>
-                        <option value="N3">N3</option>
+                        <option value="F1">F1</option>
+                        <option value="F2">F2</option>
+                        <option value="F3">F3</option>
+                        <option value="F4">F4</option>
+                        <option value="F5">F5</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Viewer 5: Kitchen -->
+            <div class="viewer-wrapper">
+                
+                <div class="container" data-viewer="5">
+                    <div class="image-container">
+                        <img class="slider-image" id="beforeImage5" src="Ours360/K1.png" alt="Ours 360" />
+                        <img class="slider-image" id="afterImage5" src="3DGS/K1.png" alt="3DGS" />
+                        <div class="overlay-label overlay-label-left" id="labelLeft5">3DGS</div>
+                        <div class="overlay-label overlay-label-right" id="labelRight5">Ours 360</div>
+                    </div>
+                    <input type="range" min="2" max="98" value="50" class="slider" id="slider5">
+                    <div class="slider-line"></div>
+                    <div class="slider-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 256 256">
+                            <rect width="256" height="256" fill="none"></rect>
+                            <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            <line x1="96" y1="128" x2="16" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            <polyline points="48 160 16 128 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+                            <line x1="160" y1="128" x2="240" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            <polyline points="208 96 240 128 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="viewer-header">
+                    <label for="imageSelect5">Scene 5 - Kitchen:</label>
+                    <select id="imageSelect5" class="scene-selector">
+                        <option value="K1">K1</option>
+                        <option value="K2">K2</option>
+                        <option value="K3">K3</option>
+                        <option value="K4">K4</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Viewer 6: Stump -->
+            <div class="viewer-wrapper">
+                
+                <div class="container" data-viewer="6">
+                    <div class="image-container">
+                        <img class="slider-image" id="beforeImage6" src="Ours360/S1.png" alt="Ours 360" />
+                        <img class="slider-image" id="afterImage6" src="3DGS/S1.png" alt="3DGS" />
+                        <div class="overlay-label overlay-label-left" id="labelLeft6">3DGS</div>
+                        <div class="overlay-label overlay-label-right" id="labelRight6">Ours 360</div>
+                    </div>
+                    <input type="range" min="2" max="98" value="50" class="slider" id="slider6">
+                    <div class="slider-line"></div>
+                    <div class="slider-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 256 256">
+                            <rect width="256" height="256" fill="none"></rect>
+                            <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            <line x1="96" y1="128" x2="16" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            <polyline points="48 160 16 128 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+                            <line x1="160" y1="128" x2="240" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+                            <polyline points="208 96 240 128 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="viewer-header">
+                    <label for="imageSelect6">Scene 6 - Stump:</label>
+                    <select id="imageSelect6" class="scene-selector">
+                        <option value="S1">S1</option>
+                        <option value="S2">S2</option>
+                        <option value="S3">S3</option>
+                        <option value="S4">S4</option>
                     </select>
                 </div>
             </div>

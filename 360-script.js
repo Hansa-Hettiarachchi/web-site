@@ -19,6 +19,16 @@ const sceneConfig = [
     id: 4,
     name: 'N-series',
     images: ['N1', 'N2', 'N3']
+  },
+  {
+    id: 5,
+    name: 'Kitchen',
+    images: ['K1', 'K2', 'K3', 'K4']
+  },
+  {
+    id: 6,
+    name: 'Stump',
+    images: ['S1', 'S2', 'S3', 'S4', 'S5']
   }
 ];
 
