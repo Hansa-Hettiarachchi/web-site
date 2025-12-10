@@ -93,13 +93,13 @@ h1 {
   overflow: hidden;
   border-radius: 1rem;
   --position: 50%;
-  max-width: 1600px;
+  max-width: 1200px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .image-container {
-  max-width: 1200px;
-  height: 900px;
+  max-width: 900px;
+  height: 675px;
   aspect-ratio: 3/2;
   position: relative;
   background: #f0f0f0;
@@ -195,11 +195,11 @@ img[id^="afterImage"],
 }
 
 .overlay-label-left {
-  left: 7px;
+  left: 4px;
 }
 
 .overlay-label-right {
-  right: 7px;
+  right: 4px;
 }
 
 .labels {

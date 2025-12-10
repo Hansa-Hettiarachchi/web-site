@@ -33,11 +33,12 @@ const sceneConfig = [
 ];
 
 // Current comparison mode
-let currentMode = '3DGS'; // '3DGS' or 'GT'
+let currentMode = '3DGS'; // '3DGS', 'GT', or 'Ours'
 
 // Mode buttons
 const mode360_3DGSBtn = document.getElementById('mode360_3DGS');
 const mode360_GTBtn = document.getElementById('mode360_GT');
+const mode360_OursBtn = document.getElementById('mode360_Ours');
 const pageTitle = document.querySelector('h1');
 
 // Handle mode switching
@@ -49,18 +50,25 @@ mode360_GTBtn.addEventListener('click', () => {
   switchMode('GT');
 });
 
+mode360_OursBtn.addEventListener('click', () => {
+  switchMode('Ours');
+});
+
 function switchMode(mode) {
   currentMode = mode;
   
   // Update button states
   mode360_3DGSBtn.classList.toggle('active', mode === '3DGS');
   mode360_GTBtn.classList.toggle('active', mode === 'GT');
+  mode360_OursBtn.classList.toggle('active', mode === 'Ours');
   
   // Update page title
   if (mode === '3DGS') {
     pageTitle.textContent = 'Ours 360 vs 3DGS Comparison';
-  } else {
+  } else if (mode === 'GT') {
     pageTitle.textContent = 'Ours 360 vs GT Comparison';
+  } else if (mode === 'Ours') {
+    pageTitle.textContent = 'Ours 360 vs Ours (E1 + E2 + E3) Comparison';
   }
   
   // Update all viewers
@@ -111,9 +119,12 @@ function updateViewerImages(viewerId) {
   if (currentMode === '3DGS') {
     beforeImage.src = `Ours360/${imageIndex}.png`;
     afterImage.src = `3DGS/${imageIndex}.png`;
-  } else {
+  } else if (currentMode === 'GT') {
     beforeImage.src = `Ours360/${imageIndex}.png`;
     afterImage.src = `gt/${imageIndex}.png`;
+  } else if (currentMode === 'Ours') {
+    beforeImage.src = `Ours360/${imageIndex}.png`;
+    afterImage.src = `Ours/${imageIndex}.png`;
   }
   
   // Reset slider to center (50%)
@@ -143,8 +154,11 @@ function updateViewerLabels(viewerId) {
   if (currentMode === '3DGS') {
     labelLeft.textContent = '3DGS';
     labelRight.textContent = 'Ours 360';
-  } else {
+  } else if (currentMode === 'GT') {
     labelLeft.textContent = 'GT';
+    labelRight.textContent = 'Ours 360';
+  } else if (currentMode === 'Ours') {
+    labelLeft.textContent = 'Ours (E1 + E2 + E3)';
     labelRight.textContent = 'Ours 360';
   }
 }
